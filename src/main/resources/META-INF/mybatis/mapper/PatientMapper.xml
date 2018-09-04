@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="my.com.medisys.prac.mybfun.mapper.PatientMapper"><!--
+================================================================================
+PatientMapper.xml
+================================================================================
+@author    Medisys<devs@medisys.com.my>
+@vendor    Medical Systems Co. Ltd
+@web       medisys.com.my
+@version   0.0.00.GA
+@since     0.0.00.GA
+================================================================================
+--> <resultMap id="PatientResultMap" type="Patient">
+        <result property="patientNo" column="patient_no"/>
+        <result property="firstName" column="first_name"/>
+        <result property="lastName" column="last_name"/>
+        <result property="fathersName" column="fathers_name"/>
+        <result property="mothersName" column="mothers_name"/>
+        <result property="birthDate" column="birth_date"/>
+        <result property="genderCode" column="gender_code"/>
+        <result property="maritalStatusCode" column="marital_status_code"/>
+        <result property="nationalityCode" column="nationality_code"/>
+        <result property="phoneNumber" column="phone_number"/>
+    </resultMap>
+    <select id="selectAll" resultMap="PatientResultMap"><![CDATA[
+        SELECT p.*
+        FROM patients p
+        WHERE 1=1
+    ]]>
+    </select>
+    <!-- http://www.mybatis.org/mybatis-3/configuration.html#typeAliases -->
+    <select id="selectByPatientNo" resultMap="PatientResultMap" parameterType="integer"><![CDATA[
+        SELECT p.*
+        FROM patients p
+        WHERE p.patient_no = #{patientNo, jdbcType=INTEGER}
+    ]]>
+    </select>
+    <select id="selectByPatient" resultMap="PatientResultMap" parameterType="Patient">
+        SELECT p.*
+        FROM patients p
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="patientNo != null"> AND UPPER(p.patient_no) LIKE UPPER(CONCAT(#{patientNo},'%'))</if>
+            <if test="firstName != null"> AND UPPER(p.first_name) LIKE UPPER(CONCAT(#{firstName},'%'))</if>
+            <if test="lastName != null"> AND UPPER(p.last_name) LIKE UPPER(CONCAT(#{lastName},'%'))</if>
+            <if test="fathersName != null"> AND UPPER(p.fathers_name) LIKE UPPER(CONCAT(#{fathersName},'%'))</if>
+            <if test="mothersName != null"> AND UPPER(p.mothers_name) LIKE UPPER(CONCAT(#{mothersName},'%'))</if>
+            <if test="birthDate != null"> AND p.birth_date = #{birthDate}</if>
+            <if test="genderCode != null"> AND p.gender_code = #{genderCode}</if>
+            <if test="maritalStatusCode != null"> AND p.marital_status_code = #{maritalStatusCode}</if>
+            <if test="nationalityCode != null"> AND p.nationality_code = #{nationalityCode}</if>
+            <if test="phoneNumber != null"> AND UPPER(p.phone_number) like UPPER(CONCAT(#{phoneNumber},'%'))</if>
+        </trim>
+    </select>
+    <insert id="insert" parameterType="Patient" useGeneratedKeys="true" keyColumn="patient_no" keyProperty="patientNo">
+        INSERT INTO patients (
+            first_name,
+            last_name,
+            fathers_name,
+            mothers_name,
+            birth_date,
+            gender_code,
+            marital_status_code,
+            nationality_code,
+            phone_number
+        ) VALUES (
+            #{firstName, jdbcType=VARCHAR},
+            #{lastName, jdbcType=VARCHAR},
+            #{fathersName, jdbcType=VARCHAR},
+            #{mothersName, jdbcType=VARCHAR},
+            #{birthDate, jdbcType=DATE},
+            #{genderCode, jdbcType=VARCHAR},
+            #{maritalStatusCode, jdbcType=VARCHAR},
+            #{nationalityCode, jdbcType=VARCHAR},
+            #{phoneNumber, jdbcType=VARCHAR}
+        )
+    </insert>
+    <update id="update" parameterType="Patient">
+        UPDATE patients
+        <set>
+            <if test="firstName !=null">first_name= #{firstName, jdbcType=VARCHAR},</if>
+            <if test="lastName !=null">last_name = #{lastName, jdbcType=VARCHAR},</if>
+            <if test="fathersName !=null">fathers_name= #{fathersName, jdbcType=VARCHAR},</if>
+            <if test="mothersName !=null">mothers_name= #{mothersName, jdbcType=VARCHAR},</if>
+            <if test="birthDate !=null">birth_date = #{birthDate, jdbcType=DATE},</if>
+            <if test="genderCode !=null">gender_code= #{genderCode, jdbcType=VARCHAR},</if>
+            <if test="maritalStatusCode !=null">marital_status_code= #{maritalStatusCode, jdbcType=VARCHAR},</if>
+            <if test="nationalityCode !=null">nationality_code= #{nationalityCode, jdbcType=VARCHAR},</if>
+            <if test="phoneNumber !=null">phone_number= #{phoneNumber, jdbcType=VARCHAR},</if>
+        </set>
+        WHERE patient_no= #{patientNo, jdbcType=INTEGER}
+    </update>
+    <delete id="delete" parameterType="integer">
+        DELETE FROM patients
+        WHERE patient_no = #{patientNo, jdbcType=INTEGER}
+    </delete>
+</mapper>

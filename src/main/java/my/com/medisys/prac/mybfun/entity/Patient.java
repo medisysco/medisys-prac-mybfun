@@ -1,0 +1,110 @@
+package my.com.medisys.prac.mybfun.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+/**
+ * @author    Medisys<devs@medisys.com.my>
+ * @version   0.0.00.GA
+ * @since     0.0.00.GA
+ */
+public class Patient implements Serializable {
+
+    private static final long serialVersionUID = -6981625323243271758L;
+
+    private Integer patientNo;
+    private String firstName;
+    private String lastName;
+    private String fathersName;
+    private String mothersName;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private Date birthDate;
+    private String genderCode;
+    private String maritalStatusCode;
+    private String nationalityCode;
+    private String phoneNumber;
+
+    public Integer getPatientNo() {
+        return patientNo;
+    }
+
+    public void setPatientNo(Integer patientNo) {
+        this.patientNo = patientNo;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getFathersName() {
+        return fathersName;
+    }
+
+    public void setFathersName(String fathersName) {
+        this.fathersName = fathersName;
+    }
+
+    public String getMothersName() {
+        return mothersName;
+    }
+
+    public void setMothersName(String mothersName) {
+        this.mothersName = mothersName;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getGenderCode() {
+        return genderCode;
+    }
+
+    public void setGenderCode(String genderCode) {
+        this.genderCode = genderCode;
+    }
+
+    public String getMaritalStatusCode() {
+        return maritalStatusCode;
+    }
+
+    public void setMaritalStatusCode(String maritalStatusCode) {
+        this.maritalStatusCode = maritalStatusCode;
+    }
+
+    public String getNationalityCode() {
+        return nationalityCode;
+    }
+
+    public void setNationalityCode(String nationalityCode) {
+        this.nationalityCode = nationalityCode;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+}
